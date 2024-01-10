@@ -9,8 +9,9 @@ const page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/auth/protected');
-        setUserData(response.data.user);
+        const response = await axios.get('http://localhost:3000/users');
+        console.log(response);
+        setUserData(response.data.displayName);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -23,7 +24,7 @@ const page = () => {
       <h2>User Information</h2>
           
           <h2>User Data</h2>
-          <pre>{JSON.stringify(userData, null, 2)}</pre>
+          <pre>{JSON.stringify(userData, null , 2)}</pre>
           </>
   )
 }

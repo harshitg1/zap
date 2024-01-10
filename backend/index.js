@@ -1,15 +1,11 @@
 const express = require('express');
-const passport = require('./auth');
+const { passport, getUsersArray } = require('./auth');
 const app = express();
 const PORT = 3000;
 var cors = require('cors')
 
 require('./auth')
 // Use session to keep track of login status
-function isLoggedIn(req,res,next)
-{
-    req.user? next() : res.sendStatus(401)
-}
 
 app.use(cors({origin:"http://localhost:3001"}))
 app.use(require('express-session')({ secret: 'mysecret', resave: true, saveUninitialized: true,cookie:{secure:false} }));
@@ -29,22 +25,26 @@ app.get('/auth/google/callback',
   }
 );
 
-app.get('/auth/logout', (req, res) => {
+app.get('/logout', (req, res) => {
   req.session.destroy();
-  res.redirect('http://localhost:3001');
+  
+  req.logout(() => {
+    res.redirect('http://localhost:3001');
+  });
+  
+  //res.redirect('http://localhost:3001');
 });
 
-app.get('/auth/protected',isLoggedIn, (req, res) => {
-     let user= req.user
-     res.send({user});
-    
-  });
+app.get('/users', (req, res) => {
+  const usersArray = getUsersArray();
+  res.json({ users: usersArray });
+});
+
 
 const invoices = [
     { id: 1, amount: 100, dueDate: '2024-01-31', recipient: 'HARSHIT SINGH' },
-    
   ];
-  
+
   // Endpoint to get invoice details for a user
   app.get('/api/invoices', (req, res) => {
     // Authenticate 

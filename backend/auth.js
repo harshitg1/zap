@@ -2,7 +2,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 require("dotenv").config();
 
-const users = [];
+const users = {};
 
 passport.use(
   new GoogleStrategy(
@@ -23,6 +23,9 @@ passport.use(
     }
   )
 );
+const getUsersArray = () => {
+  return Object.values(users); // Return an array of users
+};
 passport.serializeUser((user, done) => {
   done(null, user);
 });
@@ -34,6 +37,6 @@ passport.deserializeUser((id, done) => {
   const user = users[id];
   done(null, user);
 });
-module.exports = passport;
 
+module.exports = { passport, getUsersArray };
 
