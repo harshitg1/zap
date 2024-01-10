@@ -1,8 +1,8 @@
 const express = require('express');
-const passport = require('passport');
-
+const passport = require('./auth');
 const app = express();
 const PORT = 3000;
+var cors = require('cors')
 
 require('./auth')
 // Use session to keep track of login status
@@ -10,10 +10,11 @@ function isLoggedIn(req,res,next)
 {
     req.user? next() : res.sendStatus(401)
 }
+
+app.use(cors({origin:"http://localhost:3001"}))
 app.use(require('express-session')({ secret: 'mysecret', resave: true, saveUninitialized: true,cookie:{secure:false} }));
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 
 app.get('/auth/google',
@@ -24,21 +25,19 @@ app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Redirect to the home page or the app dashboard after successful login
-    res.redirect('/auth/protected');
+    res.redirect('http://localhost:3001/about');
   }
 );
 
 app.get('/auth/logout', (req, res) => {
   req.session.destroy();
-  res.send("Have a nice day");
-//   req.logout();
-//   res.redirect('/');
+  res.redirect('http://localhost:3001');
 });
 
 app.get('/auth/protected',isLoggedIn, (req, res) => {
-    // let name= req.user.displayName;
-    // res.send(`Hello ${name}`);
-     res.redirect('/');
+     let user= req.user
+     res.send({user});
+    
   });
 
 const invoices = [
