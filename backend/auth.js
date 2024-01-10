@@ -27,7 +27,8 @@ const getUsersArray = () => {
   return Object.values(users); // Return an array of users
 };
 passport.serializeUser((user, done) => {
-  done(null, user);
+  
+  done(null, user.id);
 });
 // passport.deserializeUser((id, done) => {
 //   const user = users.find(u => u.id === id);
@@ -35,6 +36,7 @@ passport.serializeUser((user, done) => {
 // });
 passport.deserializeUser((id, done) => {
   const user = users[id];
+  console.log('Deserializing user with ID:', id);
   done(null, user);
 });
 
