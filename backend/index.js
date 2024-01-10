@@ -36,9 +36,9 @@ app.get('/auth/logout', (req, res) => {
 });
 
 app.get('/auth/protected',isLoggedIn, (req, res) => {
-    let name= req.user.displayName;
-    res.send(`Hello ${name}`);
-    //res.redirect('/');
+    // let name= req.user.displayName;
+    // res.send(`Hello ${name}`);
+     res.redirect('/');
   });
 
 const invoices = [
