@@ -27,12 +27,10 @@ app.get('/auth/google/callback',
 
 app.get('/logout', (req, res) => {
   req.session.destroy();
+
+  req.logout(() => { });
   
-  req.logout(() => {
-    res.redirect('http://localhost:3001');
-  });
-  
-  //res.redirect('http://localhost:3001');
+  res.redirect('http://localhost:3001');
 });
 
 app.get('/users', (req, res) => {
