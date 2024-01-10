@@ -11,7 +11,7 @@ const page = () => {
       try {
         const response = await axios.get('http://localhost:3000/users');
         console.log(response);
-        setUserData(response.data.displayName);
+        setUserData(response.data.users);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -24,7 +24,15 @@ const page = () => {
       <h2>User Information</h2>
           
           <h2>User Data</h2>
-          <pre>{JSON.stringify(userData, null , 2)}</pre>
+          <ul>
+      {userData && userData.map(({ id, profile }) => (
+        <li key={id}>
+          <p>User ID: {id}</p>
+          <p>Name: {profile.displayName}</p>
+          {/* Include other user properties as needed */}
+        </li>
+      ))}
+    </ul>
           </>
   )
 }
