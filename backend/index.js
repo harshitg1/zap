@@ -16,11 +16,13 @@ app.use(passport.session());
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['email','profile'] })
 );
-
+var id= 0;
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Redirect to the home page or the app dashboard after successful login
+    console.log(req.user.id);
+    id=req.user.id;
     res.redirect('http://localhost:3001/about');
   }
 );
@@ -35,7 +37,7 @@ app.get('/logout', (req, res) => {
 
 app.get('/users', (req, res) => {
   const usersArray = getUsersArray();
-  res.json({ users: usersArray });
+  res.json({userid:id, users: usersArray });
 });
 
 
