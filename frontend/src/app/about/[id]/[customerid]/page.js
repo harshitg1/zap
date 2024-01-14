@@ -1,55 +1,58 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import {
-  doc,
-  collection,
-  query,
-  onSnapshot,
-  where,
-  getDocs,
-  addDoc,
-} from "firebase/firestore";
+import { doc, collection, query, onSnapshot } from "firebase/firestore";
 
 import { db } from "../../../../../config/firebase";
+import Navbar from "../../../../../components/Navbar";
+import CreateInvoice from "../../../../../components/CreateInvoice";
 
 const page = () => {
   const { customerid, id } = useParams();
-
   const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
-    const getCustomers = async () => {
-      const userDocRef = doc(db, "Users", id, "Customers", customerid);
-      const invoices = collection(userDocRef, "Invoices");
+    const subcollectionRef = collection(
+      doc(db, "Users", id, "Customers", customerid),
+      "Invoices"
+    );
+    const unsubscribe = onSnapshot(query(subcollectionRef), (querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setInvoices(newData);
+    });
 
-      const q = query(invoices);
-
-      // Execute the query
-      const querySnapshot = await getDocs(q);
-
-      // Loop through the results
-      querySnapshot.forEach((d) => {
-        setInvoices((prev) => [...prev, { ...d.data() }]);
-      });
+    return () => {
+      unsubscribe();
     };
-    getCustomers();
   }, []);
 
   const handleButtonClick = async (invoice) => {
-    const colRef = collection(db, "Notification");
-    const res = await addDoc(colRef, invoice);
-    console.log(res);
+    try {
+      const response = await fetch(
+        `https://hooks.zapier.com/hooks/catch/17555516/3gyrqsp/`,
+        {
+          method: "POST",
+          body: JSON.stringify(invoice),
+        }
+      );
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
+
+  const convertDate = (date) => {
+    const formattedDate = new Intl.DateTimeFormat("en-GB").format(date);
+    return formattedDate;
   };
 
   return (
     <>
-      {/* <div>
-            hi
-            {invoices.map((item, ind) => console.log(item))}
-        </div> */}
+      <Navbar />
+      <CreateInvoice userid={id} customerid={customerid} />
       <div className="max-w-4xl mx-auto ">
-        <div>{invoices.map((invoice) => console.log(invoice))}</div>
         <ul>
           {invoices.map((invoice, ind) => (
             <li
@@ -57,19 +60,21 @@ const page = () => {
               className="border p-4 mb-4 rounded-lg hover:shadow-md"
             >
               <p className="text-xl font-semibold mb-2">{invoice.title}</p>
+              <p className="text-xl font-semibold mb-2">{invoice.name}</p>
               <div className="flex justify-between mb-2">
                 <p className="text-gray-600">{invoice.amount}</p>
-                <p className="text-gray-500">Due Date: {invoice.dueDate}</p>
+                <p className="text-gray-500">
+                  Due Date: {convertDate(invoices.duedate)}
+                </p>
               </div>
-              <div className="text-gray-500">Email: {invoice.Email}</div>
-              <a href="http://localhost:3000/logout">
-            <button
-              className="bg-black  text-white px-4 py-2  border rounded-md"
-              onClick={() => handleButtonClick(invoice)}
-            >
-              Automate
-            </button>
-          </a>
+              <div className="text-gray-500">Email: {invoice.email}</div>
+
+              <button
+                className="bg-black  text-white px-4 py-2  border rounded-md"
+                onClick={() => handleButtonClick(invoice)}
+              >
+                Automate
+              </button>
             </li>
           ))}
         </ul>

@@ -1,20 +1,21 @@
 const page = () => {
   return (
     <>
-      <div className=" h-full w-full bg-black flex flex-col ">
-        <div className="mx-40 mt-20 mb-9 text-7xl  bg-black text-white">
-          <div className="font-manrope drop-shadow-2xl">
+      <div className=" h-screen w-full bg-black flex bottom-0 pb-0 flex-col ">
+        <div className="mx-10 md:mx-20 lg:mx-40 mt-20 bg-black text-white">
+          <div className="font-manrope text-5xl mb-10 sm:mb-8  sm:text-6xl drop-shadow-2xl">
             Invoice Reminder Automated!
           </div>
-          <div>
-            <a href="http://localhost:3000/auth/google">
-              <button className="text-lg p-4 border"> Login with Google </button>
-            </a>
-          </div>
+
+          <a href="http://localhost:3000/auth/google">
+            <button className="text-sm p-2 sm:p-4 border  md:text-lg">
+              {" "}
+              Login with Google{" "}
+            </button>
+          </a>
         </div>
-        <div className=" mx-40 bg-white   text-red-500 border">
+        <div className=" mt-4 mx-12 sm:mx-16  md:mx-20 lg:mx-40 bg-white  ">
           <img src="Group2.png"></img>
-        
         </div>
       </div>
     </>
