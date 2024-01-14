@@ -5,7 +5,7 @@ const PORT = 3000;
 var cors = require('cors')
 
 require('./auth')
-
+// Use session to keep track of login status
 
 app.use(cors({origin:"http://localhost:3001"}))
 app.use(require('express-session')({ secret: 'mysecret', resave: true, saveUninitialized: true,cookie:{secure:false} }));
@@ -30,7 +30,9 @@ app.get('/auth/google/callback',
 
 app.get('/logout', (req, res) => {
   req.session.destroy();
+
   req.logout(() => { });
+  
   res.redirect('http://localhost:3001');
 });
 

@@ -62,7 +62,7 @@ const CreateInvoice = ({ userid, customerid }) => {
   };
 
   return (
-    <div className="max-w-2xl  mx-auto mt-8 p-6 bg-white rounded shadow-lg">
+    <div className=" max-w-2xl   mx-auto mt-8 p-6 bg-white rounded shadow-lg">
       <h1 className="text-3xl font-bold mb-4">Create Invoice</h1>
       <form className="flex" onSubmit={handleSubmit}>
         <div className="mb-4">
