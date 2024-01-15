@@ -8,9 +8,9 @@ const page = () => {
           </div>
 
           <a href="http://localhost:3000/auth/google">
-            <button className="text-sm p-2 sm:p-4 border  md:text-lg">
+            <button className="text-sm px-10 py-3  border  md:text-lg">
               {" "}
-              Login with Google{" "}
+              Login 
             </button>
           </a>
         </div>

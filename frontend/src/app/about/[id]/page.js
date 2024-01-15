@@ -33,15 +33,15 @@ const page = () => {
   return (
     <>
       <Navbar />
-      <div className="max-w-4xl mx-auto mt-8 flex flex-col">
-        <div className="text-2xl">Customers</div>
         <AddCustomer userid={id}/>
-        <div className="bg-gray-100 p-4 overflow-auto">
+      <div className="max-w-5xl mx-auto mt-6 ">
+        <div className="text-2xl px-4">Customers</div>
+        <div className=" p-2 overflow-auto">
           {customers.map((item, ind) => (
             <a key={ind} href={`/about/${id}/${item.id}`}>
-              <div className="bg-white rounded-md p-2 mb-2">
-                <h1>{item.name}</h1>
-                <h3>{item.email}</h3>
+              <div  className=" p-4 my-2 rounded border bottom-1 shadow-sm">
+              <p className="text-lg font-bold mb-2 ">{item.name}</p>
+              <p className="text-gray-600">{item.email}</p>
               </div>
             </a>
           ))}

@@ -1,9 +1,9 @@
 const Navbar = () => {
   return (
     <>
-      <nav className="bg-black p-4">
-        <div className="container mx-auto flex items-center justify-between">
-          <a href="#" className="text-white text-lg font-bold">
+      <div className="bg-black p-4  ">
+        <div className="mx-12 flex  items-center justify-between">
+          <a href="#" className="text-white text-2xl font-bold">
             Zap
           </a>
 
@@ -13,7 +13,8 @@ const Navbar = () => {
             </button>
           </a>
         </div>
-      </nav>
+        
+      </div>
     </>
   );
 };

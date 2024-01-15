@@ -52,17 +52,17 @@ const page = () => {
     <>
       <Navbar />
       <CreateInvoice userid={id} customerid={customerid} />
-      <div className="max-w-4xl mx-auto ">
-        <ul>
+      <div className="max-w-5xl mx-auto ">
+        <ul className=" mx-8">
           {invoices.map((invoice, ind) => (
             <li
               key={ind}
               className="border p-4 mb-4 rounded-lg hover:shadow-md"
             >
-              <p className="text-xl font-semibold mb-2">{invoice.title}</p>
-              <p className="text-xl font-semibold mb-2">{invoice.name}</p>
+              <p className="text-xl font-semibold mb-2">Invoice No: &nbsp;{invoice.title}</p>
+              <p className="text-xl mb-2">Name: &nbsp;{invoice.name}</p>
               <div className="flex justify-between mb-2">
-                <p className="text-gray-600">{invoice.amount}</p>
+                <p className="text-gray-600">Amount: ₹{invoice.amount}</p>
                 <p className="text-gray-500">
                   Due Date: {convertDate(invoices.duedate)}
                 </p>
@@ -70,7 +70,7 @@ const page = () => {
               <div className="text-gray-500">Email: {invoice.email}</div>
 
               <button
-                className="bg-black  text-white px-4 py-2  border rounded-md"
+                className="bg-black  text-white px-4 py-2 mt-2 border rounded-md"
                 onClick={() => handleButtonClick(invoice)}
               >
                 Automate
