@@ -16,22 +16,18 @@ app.use(
     cookie: { secure: false },
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["email", "profile"] })
-);
+app.get( "/auth/google", passport.authenticate("google", { scope: ["email", "profile"] }));
 
 var id = 0;
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
+app.get("/auth/google/callback",passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
     console.log(req.user.id);
     id = req.user.id;
-    res.redirect("http://localhost:3001/about");
+    res.redirect("http://localhost:3001/main");
   }
 );
 

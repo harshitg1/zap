@@ -16,7 +16,7 @@ passport.use(
       user = newUser;
       done(null, newUser);
     }
-  )
+  )   
 );
 
 const getUser = () => {

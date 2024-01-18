@@ -1,8 +1,8 @@
 const Navbar = () => {
   return (
     <>
-      <div className="bg-black p-4  ">
-        <div className="mx-12 flex  items-center justify-between">
+      <div className="bg-black p-4">
+        <div className=" flex px-10 items-center justify-between">
           <a href="#" className="text-white text-2xl font-bold">
             Zap
           </a>
@@ -13,7 +13,6 @@ const Navbar = () => {
             </button>
           </a>
         </div>
-        
       </div>
     </>
   );

@@ -1,3 +1,4 @@
+
 const page = () => {
   return (
     <>
@@ -12,6 +13,7 @@ const page = () => {
               {" "}
               Login 
             </button>
+            
           </a>
         </div>
         <div className=" mt-4 mx-12 sm:mx-16  md:mx-20 lg:mx-40 bg-white  ">
